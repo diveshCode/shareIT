@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+env/
+
+# Environment variables
+.env
+backend/.env
+
+# Database
+db.sqlite3
+*.sqlite3
+
+# Media uploads (local only)
+media/
+
+# Collected static files (production)
+staticfiles/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node (only if used later)
+node_modules/
+
+# Logs
+*.log

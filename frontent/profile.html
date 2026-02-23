@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+  <title>Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div id="navbar"></div>
+
+  <div class="profile-wrapper">
+
+    <div class="profile-header">
+      <div class="profile-image">
+        <img id="user-profile" />
+      </div>
+
+      <div class="profile-info">
+        <h2 id="username-profile"></h2>
+        <p id="email"></p>
+
+        <div class="profile-stats">
+          <div>
+            <strong id="post-count">0</strong>
+            <span>Posts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-posts">
+      <h3>Your Posts</h3>
+      <button type="button" id="post-btn" onclick="createPost()">Wanna Post ?</button>
+      <div id="post"></div>
+    </div>
+
+  </div>
+
+  <script src="navbar.js"></script>
+  <script src="profile.js"></script>
+
+  <script>
+    loadNavbar();
+  </script>
+
+</body>
+</html>
