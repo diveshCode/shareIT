@@ -8,7 +8,7 @@ function register() {
         return;
     }else{
 
-    fetch("http://127.0.0.1:8000/api/register/", {
+    fetch("https://shareit-42a7.onrender.com/api/register/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -23,6 +23,7 @@ function register() {
     .then(data => {
         console.log(data);
         alert("Registration successful!");
+        window.location.href = "login.html";
     })
     .catch(error => {
         console.error("Error:", error);

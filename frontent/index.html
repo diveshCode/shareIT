@@ -9,7 +9,17 @@
     <div class="feed-wrapper">
         <div id="feeds"></div>
     </div>    
+    <!-- Comment Modal -->
+    <div id="comment-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeCommentModal()">✖</button>
+        
+        <div id="modal-comments"></div>
 
+        <input type="text" id="modal-comment-input" placeholder="Write a comment...">
+        <button onclick="submitModalComment()">Send</button>
+    </div>
+    </div>
     <script src="navbar.js"></script>
     <script src="feed.js"></script>
     <script>

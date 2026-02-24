@@ -1,5 +1,5 @@
 (function profile() {
-    const api = 'http://127.0.0.1:8000/api'
+    const api = 'https://shareit-42a7.onrender.com/api'
 
     const token = localStorage.getItem("access");
 
@@ -36,7 +36,7 @@
         const profileImg = document.getElementById("user-profile");
 
         if (data.profile_image) {
-            profileImg.src = "http://127.0.0.1:8000" + data.profile_image;
+            profileImg.src = "https://shareit-42a7.onrender.com" + data.profile_image;
         } else {
             profileImg.src = "./icons/user.png";
         }
@@ -65,11 +65,11 @@
 
                     <p>${post.content}</p>
                     ${post.image 
-                        ? `<img src="http://127.0.0.1:8000${post.image}" />` 
+                        ? `<img src="https://shareit-42a7.onrender.com${post.image}" />` 
                         : ""}
 
                     ${post.video 
-                        ? `<video controls src="http://127.0.0.1:8000${post.video}"></video>` 
+                        ? `<video controls src="https://shareit-42a7.onrender.com${post.video}"></video>` 
                         : ""}
 
                     <div class="post-footer">
