@@ -170,10 +170,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 import os
 import dj_database_url
 
-DEBUG = False
-
-ALLOWED_HOSTS = ['*']  # later replace with your domain
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
