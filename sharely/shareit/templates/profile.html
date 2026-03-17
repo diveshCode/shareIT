@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+  <div id="navbar"></div>
+  <div class="profile-wrapper">
+    <button class="edit-profile" id="edit-btn" name="edit">Edit</button>
+  
+  <!-- Hidden Form -->
+  <div id="edit-form" class="edit-form">
+      <input type="text" id="username-input" placeholder="Username">
+      <textarea id="bio-input" placeholder="Bio"></textarea>
+      <input type="file" id="profile-image">
+  
+      <button id="update-btn" >Update</button>
+  </div>
+  <!-- old -->
+    <div class="profile-header">
+      <div class="profile-image">
+        <img id="user-profile" />
+      </div>
+
+      <div class="profile-info">
+        <h2 id="username-profile"></h2>
+        <h3 id="bio"></h3>
+        <p id="email"></p>
+
+        <div class="profile-stats">
+          <div>
+            <strong id="post-count">0</strong>
+            <span>Posts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-posts">
+      <h3>Your Posts</h3>
+      <button type="button" id="goto-post" onclick="gottopost()">Wanna Post ?</button>
+      <div id="post">
+      <div>
+    </div>
+
+  </div>
+  <script src="{% static 'js/api.js' %}"></script>
+  <script src="{% static 'js/navbar.js' %}"></script>
+  <script src="{% static 'js/posts.js' %}" defer></script>
+  <script src="{% static 'js/profile.js' %}" defer></script>
+  <script src="{% static 'js/feed.js' %}" defer></script>
+  <script src="{% static 'js/create.js' %}"></script>
+
+  <script>
+    loadNavbar();
+  </script>
+{% endblock %}

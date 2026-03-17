@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    {% block content %}{% endblock %}
+    <div id="comment-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeCommentModal()">✖</button>
+    
+            <div id="modal-comments"></div>
+    
+        </div>
+        <div class="comment-box-inp">
+            <input type="text" id="modal-comment-input" placeholder="Write a comment...">
+            <button class="send-comment-btn" onclick="submitModalComment()">Send</button>
+        </div>
+    </div>
+<script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

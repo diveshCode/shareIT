@@ -1,0 +1,157 @@
+from django.shortcuts import get_object_or_404
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import *
+from .serializers import *
+from django.db.models import Q
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import AllowAny
+from .pagination import PostPagination
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_posts(request):
+    query = request.GET.get("search","").strip()
+
+    if query:
+        posts = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(user__username__icontains=query)
+        ).order_by('-created_at')
+    else:
+        posts = Post.objects.all().order_by('-created_at')
+
+    paginator = PostPagination()
+    page = paginator.paginate_queryset(posts, request)
+    if page is not None:
+        serializer = PostSerializer(page, many=True, context={'request': request})
+        return paginator.get_paginated_response(serializer.data)
+    serializer = PostSerializer(posts, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def delete_comment(request, comment_id):
+    try:
+        comment = Comment.objects.get(id=comment_id)
+    except Comment.DoesNotExist:
+        return Response({"error": "Comment not found"}, status=404)
+
+    # 🔐 Allow only comment owner to delete
+    if comment.user != request.user:
+        return Response({"error": "Not allowed"}, status=403)
+    comment.delete()
+    return Response({"message": "Comment deleted"}, status=200)
+
+
+
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def delete_post(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return Response({"error": "post not found"}, status=404)
+
+    # 🔐 Allow only comment owner to delete
+    if post.user != request.user:
+        return Response({"error": "Not allowed"}, status=403)
+    post.delete()
+    return Response({"message": "Post deleted"}, status=200)
+
+
+
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def update_profile(request):
+    profile = request.user.profile
+
+    serializer = ProfileUpdateSerializer(
+        profile,
+        data=request.data,
+        partial=True
+    )
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)
+
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register(request):
+    user = registerSerializer(data=request.data)
+    if user.is_valid():
+        user.save()
+        return Response({"message": "User created successfully"}, status=201)
+    return Response(user.errors, status=400)
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_post(request):
+    print("CREATE_POST VIEW HIT")
+    serializer = PostSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        return Response(serializer.data)
+    return Response(serializer.errors)
+
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def like_post(request, post_id):
+
+    post = get_object_or_404(Post, id=post_id)
+
+    like, created = Like.objects.get_or_create(
+        user=request.user,
+        post=post
+    )
+
+    if not created:
+        like.delete()
+
+    return Response({
+    "like_count": post.likes.count()
+}, status=status.HTTP_200_OK)
+
+
+
+
+from django.shortcuts import get_object_or_404
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    serializer = CommentSerializer(
+    data=request.data,
+    context={"request": request}
+    )
+
+    if serializer.is_valid():
+        serializer.save(user=request.user, post=post)
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_profile(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    serializer = ProfileDetailSerializer(profile, context={"request": request})
+    return Response(serializer.data)
