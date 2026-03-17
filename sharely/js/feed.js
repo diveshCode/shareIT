@@ -17,62 +17,6 @@ const searchInput = document.getElementById("searchInput");
 
 let searchTimeout;
 
-// old 
-// if (searchInput) {
-//     searchInput.addEventListener("keyup", function () {
-
-//         clearTimeout(searchTimeout);
-
-//         const query = this.value.trim();
-
-//         searchTimeout = setTimeout(() => {
-//             // if empty → reload all posts
-//             if (query === "") {
-//                 loadPosts();
-//                 return;
-//             }
-//             fetch(`${API}/posts/?search=${query}`, {
-//                 headers: {
-//                     "Authorization": `Bearer ${token}`
-//                 }
-//             })
-
-//             .then(res => res.json())
-//             .then(posts => {
-//                 postSection = document.getElementById("feeds")
-//                 renderPosts(posts, postSection);
-//             })
-//             .catch(err => console.error("Search error:", err));
-
-//         }, 300); // wait 300ms after typing
-//     });
-// }
-
-
-
-// delete comment
-
-
-
-// function loadPosts() {
-    
-//     fetch(`${API}/posts/`, {
-//         headers: {
-//             "Authorization": `Bearer ${token}`
-//         }
-//     })
-//     .then(res => res.json())
-//     .then(posts => {
-//         allPosts = posts;
-//         const postSection = document.getElementById("feeds")
-//         renderPosts(posts, postSection);
-//     })
-//     .catch(err => console.error(err));
-// }
-
-
-// new 
-
 if (searchInput) {
     searchInput.addEventListener("keyup", function () {
 
