@@ -67,6 +67,7 @@ CLOUDINARY_STORAGE = {
 CORS_ALLOWED_ORIGINS = [
     "http://192.168.1.8:3000",
     "http://localhost:3000",
+    "https://sharely.vercel.app"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
