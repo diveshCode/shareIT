@@ -76,7 +76,9 @@ function updateCommentCount(postId) {
 
 
 function renderPosts(posts, postSection) {
-    console.log("this funtion is renderPosts.")
+    const base = "https://shareit-42a7.onrender.com";
+    // console.log("this funtion is renderPosts.")
+    console.log(posts)
     if (!postSection) return;
 
     // postSection.innerHTML = "";
@@ -119,9 +121,9 @@ function renderPosts(posts, postSection) {
 
                 <p>${post.content}</p>
 
-                ${post.image ? `<img src="${base}${post.image}" />` : ""}
+                ${post.image ? `<img src="${post.image}" />` : ""}
 
-                ${post.video ? `<video controls src="${base}${post.video}"></video>` : ""}
+                ${post.video ? `<video controls src="${post.video}"></video>` : ""}
 
                 <div class="post-actions">
                     <button class="like-btn" data-id="${post.id}">
