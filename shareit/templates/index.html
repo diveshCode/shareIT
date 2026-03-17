@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Feed{% endblock %}
+
+{% block content %}
+<div id="navbar">
+    
+</div>
+<div class="feed-wrapper">
+    <input type="text" id="searchInput" placeholder="Search posts or content...">
+    <div id="feeds"></div>
+</div>    
+<!-- Comment Modal -->
+<script src="{% static 'js/api.js' %}" ></script>
+<script src="{% static 'js/navbar.js' %}" ></script>
+<script src="{% static 'js/feed.js' %}"></script>
+<script src="{% static 'js/posts.js' %}"></script>
+
+<script>
+    loadNavbar();
+    loadPosts();
+</script>
+
+{% endblock %}
