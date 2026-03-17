@@ -1,8 +1,7 @@
-// const API = "https://shareit-42a7.onrender.com/api";
+document.getElementById("login-btn").addEventListener("click", login);
 
 function login() {
-    console.log(API)
-    
+
     fetch(`${API}/token/`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -21,12 +20,12 @@ function login() {
 
     .then(data => {
         localStorage.setItem("access", data.access);
-        window.location.href = "/";
-
+        window.location.href = "/index.html";
     })
 
-    .catch(err => {
-        document.getElementById("login-error").innerText = "Invalid username or password";
+    .catch(() => {
+        document.getElementById("login-error").innerText =
+        "Invalid username or password";
     });
-}
 
+}
