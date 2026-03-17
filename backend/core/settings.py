@@ -70,7 +70,12 @@ CORS_ALLOWED_ORIGINS = [
     "https://sharelyapp.vercel.app"
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://sharelyapp.vercel.app"
+]
+
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
