@@ -4,10 +4,15 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from django.http import JsonResponse
 from django.conf import settings
 from django.conf.urls.static import static
 
+def home(request):
+    return JsonResponse({"status": "Sharely API running"})
+
 urlpatterns = [
+    path("", home),
     path('admin/', admin.site.urls),
 
     path('api/token/', TokenObtainPairView.as_view()),
