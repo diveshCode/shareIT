@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create account</title>
+
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<div class="register-container">
+    <h2>Create Account</h2>
+
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <input type="password" id="confirm_password" placeholder="Confirm Password" required>
+
+    <button type="button" id="register-btn" onclick="register()">Register</button>
+
+    <p id="message"></p>
+
+    <p>
+        Already have an account?
+        <a href="/login.html">Login</a>
+    </p>
+</div>
+
+<!-- Comment Modal (from base.html) -->
+<div id="comment-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeCommentModal()">✖</button>
+        <div id="modal-comments"></div>
+    </div>
+
+    <div class="comment-box-inp">
+        <input type="text" id="modal-comment-input" placeholder="Write a comment...">
+        <button class="send-comment-btn" onclick="submitModalComment()">Send</button>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="./js/app.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/register.js"></script>
+<script src="./js/navbar.js"></script>
+
+<script>
+loadNavbar();
+const LOGIN_URL = "/login.html";
+</script>
+
+</body>
+</html>
