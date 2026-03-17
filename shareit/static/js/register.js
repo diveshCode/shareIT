@@ -1,6 +1,5 @@
 function register(event){
     if(event) event.preventDefault();
-    // const API = "https://shareit-42a7.onrender.com/api";
     const username = document.getElementById("username").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;

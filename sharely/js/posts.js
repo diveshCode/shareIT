@@ -96,7 +96,7 @@ function renderPosts(posts, postSection) {
 
                     ${
                         post.profile_image
-                        ? `<img class="post-pic" src="${base}${post.profile_image}" />`
+                        ? `<img class="post-pic" src="${post.profile_image}" />`
                         : `<i class="fa-solid fa-circle-user"></i>`
                     }
 
@@ -261,7 +261,6 @@ function closeCommentModal() {
 
 
 function submitModalComment() {
-
     const input = document.getElementById("modal-comment-input");
 
     // 🛑 Safety check

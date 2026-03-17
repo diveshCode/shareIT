@@ -6,9 +6,10 @@ from .models import *
 from .serializers import *
 from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import permission_classes
+from rest_framework.decorators import permission_classes, parser_classes
 from rest_framework.permissions import AllowAny
 from .pagination import PostPagination
+from rest_framework.parsers import MultiPartParser, FormParser
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -96,16 +97,23 @@ def register(request):
 
 
 
+from rest_framework.parsers import MultiPartParser, FormParser
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser, FormParser])
 def create_post(request):
-    print("CREATE_POST VIEW HIT")
-    serializer = PostSerializer(data=request.data)
+    print(request.FILES)
+    serializer = PostSerializer(
+        data=request.data,
+        context={'request': request}
+    )
+
     if serializer.is_valid():
         serializer.save(user=request.user)
         return Response(serializer.data)
-    return Response(serializer.errors)
 
+    return Response(serializer.errors)
 
 
 

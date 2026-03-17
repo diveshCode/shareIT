@@ -1,4 +1,3 @@
-// const APIs = "https://shareit-42a7.onrender.com/api";
 
 function createPost() {
   console.log("createPost running");

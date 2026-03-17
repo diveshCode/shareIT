@@ -46,7 +46,8 @@ class PostSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
     like_count = serializers.SerializerMethodField()
     profile_image = serializers.SerializerMethodField()
-    is_owner = serializers.SerializerMethodField()   # ⭐ ADD THIS
+    is_owner = serializers.SerializerMethodField()
+
 
     class Meta:
         model = Post
@@ -63,6 +64,17 @@ class PostSerializer(serializers.ModelSerializer):
             'comments',
             'is_owner'
         ]
+
+    def get_image(self, obj):
+        if obj.image:
+            return obj.image.url
+        return None
+
+
+    def get_video(self, obj):
+        if obj.video:
+            return obj.video.url
+        return None
 
     def get_comments(self, obj):
         request = self.context.get("request")

@@ -41,7 +41,7 @@ function profile() {
         const profileImg = document.getElementById("user-profile");
 
         if (data.profile_image) {
-            profileImg.src = data.profile_image;
+            profileImg.src = `${base}${data.profile_image}`;
         } else {
             profileImg.src =
                 "https://cdn-icons-png.flaticon.com/128/9131/9131646.png";

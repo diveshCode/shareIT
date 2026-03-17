@@ -2,12 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+import cloudinary.models
+
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE , related_name='posts')
     title = models.CharField(max_length=200, blank=True)
     content = models.TextField(blank=True)
-    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
+
+    image = cloudinary.models.CloudinaryField('image', blank=True, null=True)
     video = models.FileField(upload_to='post_videos/', blank=True, null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -47,14 +51,16 @@ class Comment(models.Model):
 
 # models.py
 
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_image = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
-    bio = models.TextField(max_length=150, blank=True, null=True)
 
-    def __str__(self):
-        return self.user.username
+    profile_image = cloudinary.models.CloudinaryField(
+        'profile_image',
+        blank=True,
+        null=True
+    )
+
+    bio = models.TextField(max_length=150, blank=True, null=True)
     
 
 from django.db.models.signals import post_save

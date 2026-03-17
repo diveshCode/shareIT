@@ -1,4 +1,3 @@
-// const API = "https://shareit-42a7.onrender.com/api";
 
 function login() {
     console.log(API)

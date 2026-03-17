@@ -76,7 +76,6 @@ function updateCommentCount(postId) {
 
 
 function renderPosts(posts, postSection) {
-    const base = "https://shareit-42a7.onrender.com";
     // console.log("this funtion is renderPosts.")
     console.log(posts)
     if (!postSection) return;
@@ -98,7 +97,7 @@ function renderPosts(posts, postSection) {
 
                     ${
                         post.profile_image
-                        ? `<img class="post-pic" src="${base}${post.profile_image}" />`
+                        ? `<img class="post-pic" src="${post.profile_image}" />`
                         : `<i class="fa-solid fa-circle-user"></i>`
                     }
 
@@ -121,9 +120,9 @@ function renderPosts(posts, postSection) {
 
                 <p>${post.content}</p>
 
-                ${post.image ? `<img src="${post.image}" />` : ""}
+                ${post.image ? `<img src="${base}${post.image}" />` : ""}
 
-                ${post.video ? `<video controls src="${post.video}"></video>` : ""}
+                ${post.video ? `<video controls src="${base}${post.video}"></video>` : ""}
 
                 <div class="post-actions">
                     <button class="like-btn" data-id="${post.id}">
