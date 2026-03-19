@@ -54,13 +54,11 @@ INSTALLED_APPS = [
 ]
 
 
-
-
-
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CORS_ALLOWED_ORIGINS = [
     "http://192.168.1.8:3000",
+    "http://127.0.0.1:5500",
     "http://localhost:3000",
     "https://sharelyapp.vercel.app"
 ]
