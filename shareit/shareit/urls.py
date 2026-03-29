@@ -24,5 +24,6 @@ urlpatterns = [
     path("profile/<str:username>/", TemplateView.as_view(template_name="profile.html")),
     path("login/", TemplateView.as_view(template_name = "login.html"), name='login'),
     path("register/", TemplateView.as_view(template_name = "register.html"),name='register' ),
-    path("create-post/", TemplateView.as_view(template_name = "create.html") )
+    path("create-post/", TemplateView.as_view(template_name = "create.html") ),
+    path("change-password/", TemplateView.as_view(template_name = "change_password.html") )
 ]

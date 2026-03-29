@@ -7,6 +7,8 @@ urlpatterns = [
     path('posts/', get_posts),
     # path('posts/search/', search_posts),
     path('create-post/', create_post),
+    path('change-password/', change_password),
+
     path('delete-post/<int:post_id>', delete_post),
     path('update-profile/', update_profile),
     path('register/', register),

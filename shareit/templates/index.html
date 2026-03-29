@@ -3,13 +3,14 @@
 {% block title %}Feed{% endblock %}
 
 {% block content %}
-<div id="navbar">
-    
-</div>
+
+
 <div class="feed-wrapper">
-    <input type="text" id="searchInput" placeholder="Search posts or content...">
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search posts or content..."></div>
     <div id="feeds"></div>
-</div>    
+</div>
+   
 <!-- Comment Modal -->
 <script src="{% static 'js/api.js' %}" ></script>
 <script src="{% static 'js/navbar.js' %}" ></script>

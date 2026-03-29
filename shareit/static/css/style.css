@@ -3,7 +3,196 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     background: #f3f4f6;
-    padding-top: 40px;   /* space for fixed navbar */
+}
+
+
+.main-content {
+    grid-area: main;
+    box-sizing: border-box;
+    overflow-y: auto;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+/* GRID CONTAINER */
+.container {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 60px 1fr;
+
+  grid-template-areas:
+    "navbar navbar"
+    "sidebar main"
+    "sidebar bottom";
+  height: 100vh;
+}
+
+.nav-icons{
+    margin-right: 15px;
+}
+
+/* AREAS */
+#navbar {
+  grid-area: navbar;
+  color: rgb(2, 2, 2);
+}
+
+#sidebar {
+  grid-area: sidebar;
+  background: #1e1e1e;
+  color: white;
+}
+
+
+.bottom-bar {
+  grid-area: bottom;
+  background: #111;
+  color: white;
+}
+
+.main-body{
+    display: flex;
+}
+
+/* BOTTOM BAR (hidden on desktop) */
+.bottom-bar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .container {
+      grid-template-columns: 1fr;
+  
+      grid-template-areas:
+        "navbar"
+        "main"
+        "bottom";
+    }
+  
+    #sidebar {
+      display: none;
+    }
+  
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+  }
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+
+    .profile-content {
+        padding: 10px;
+        max-width: 100%;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #user-profile {
+        width: 100px;
+        height: 100px;
+    }
+    /* Hide sidebar */
+    #sidebar{
+        display:none;
+    }
+
+    /* Show bottom bar */
+    .bottom-bar {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        background: white;
+        border-top: 1px solid #ddd;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu{
+        display: flex;
+        text-decoration: none;
+        width: 100%;
+        justify-content: space-evenly;
+        cursor: pointer;
+    }
+
+    ul,li{
+        text-decoration: none;
+        list-style: none;
+        margin: 0;
+    }
+
+    li{
+        cursor: pointer;
+    }
+
+    .bottom-bar div {
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    /* Fix content spacing */
+    body {
+        display: block;
+        background: #f3f4f6;
+        margin: auto;
+        padding: auto;
+    }
+    
+
+    .profile-content{
+        width: 100%;
+    }
+
+    .feed-wrapper {
+        margin: auto;
+        width: 100%;
+    }
+
+    .search-container {
+        position: fixed;
+        width: 100%;
+        margin: auto;
+    }
+    
+    #feed{
+        width: 100%;
+    }
+    
+    #searchInput {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+
+
+/* SIDEBAR */
+#sidebar {
+    background: #111;
+    color: white;
+}
+
+
+
+
+.feed-wrapper {
+    height: 100%;
+    width: 90%;
+    max-width: 760px;   /* desktop size */
+    margin:0 auto;
 }
 
 /* ===== NAVBAR ===== */
@@ -11,11 +200,10 @@ body {
 
 #navbar {
     position: fixed;
-    top: 0;
+    /* top: 0; */
     left: 0;
-    width: 97%;
+    width: 100%;
     height: 60px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,14 +216,28 @@ body {
 }
 
 #searchInput {
-    margin: 0px 25px 0px 20px;
+    width: 90%;
+    height: 20px;
     background-color: #ffffff;
-    min-width: 91%;
-    height: 22px;
     font-size: medium;
-    padding: 6px;
+    padding: 10px;
     border-radius: 12px;
 }
+
+.search-container {
+    max-width: 750px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 70px;
+    position: sticky;   /* better than fixed */
+    top: 0%;          /* below navbar */
+    width: 100%;
+    background: #f3f4f6;
+    padding: 10px;
+    z-index: 10;
+  }
+
 
 .app-name{
     font-family: cursive;
@@ -158,8 +360,6 @@ button {
     background: rgb(255, 255, 255);
     border-radius: 12px;
     box-shadow: 0 12px 4px rgba(17, 24, 39, 0.15);
-    padding: 10px;
-    margin: 20px;
 }
 
 
@@ -167,9 +367,24 @@ button {
 /* ===== PROFILE WRAPPER ===== */
 
 .profile-wrapper {
-    max-width: 900px;
-    margin: 20px auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+/* .profile-wrapper {
+    width: 100%;
+    max-width: 680px;  
+    margin:0 auto;
+} */
+
+.profile-content {
+    height: 100%;
+    width: 100%;
+    max-width: 700px;   /* SAME as feed */
+    margin: 0 auto;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 /* ===== PROFILE HEADER ===== */
@@ -177,7 +392,7 @@ button {
 .profile-header {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
     background: white;
     padding: 25px;
     border-radius: 12px;
@@ -235,16 +450,23 @@ button {
 }
 
 .profile-posts {
-    margin-top: 30px;
+    width: 100%;
+    max-width: 700px;   /* desktop size */
+    margin-top:20px;
 }
+
+/* #post{
+    width: 100%;
+    margin: 0 auto;
+} */
 
 .profile-posts h3 {
     margin-bottom: 15px;
 }
 
 .post-card {
+    width: 100%; 
     background: white;
-    padding: 15px;
     margin-bottom: 15px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
@@ -252,21 +474,6 @@ button {
 
 /* ===== RESPONSIVE ===== */
 
-@media (max-width: 768px) {
-    .profile-header {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .profile-image {
-        width: 120px;
-        height: 120px;
-    }
-
-    .profile-wrapper {
-        padding: 10px;
-    }
-}
 
 .register-link {
     display: block;
@@ -349,24 +556,12 @@ button {
     text-align: center;
 }
 
-/* ===== RESPONSIVE ===== */
-
-@media (max-width: 600px) {
-    .create-card {
-        width: 100%;
-    }
-}
 
 
-.feed-wrapper {
-    text-align: left;
-    max-width: 700px;
-    margin: 30px auto;
-    padding: 0 15px;
-}
 
 .post-card {
     background: white;
+    width: 96%;
     border-radius: 12px;
     padding: 15px;
     margin-bottom: 20px;
@@ -715,4 +910,38 @@ img.post-pic {
 .success {
     color: green;
     margin-top: 10px;
+}
+
+
+
+#sidebar .logo {
+    margin-bottom: 30px;
+}
+
+#sidebar .menu {
+    list-style: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+#sidebar .menu li {
+    padding: 12px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 8px;
+    cursor:pointer;
+    transition: 0.2s;
+}
+
+#sidebar .menu li:hover {
+    background: #333;
+}
+
+#feeds{
+    width: 100%;
+}
+
+
+.layout {
+    display: flex;
 }

@@ -10,6 +10,28 @@ from rest_framework.decorators import permission_classes, parser_classes
 from rest_framework.permissions import AllowAny
 from .pagination import PostPagination
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.contrib.auth.hashers import check_password
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    serializer = ChangePasswordSerializer(data=request.data)
+
+    if serializer.is_valid():
+        user = request.user
+        old_password = serializer.validated_data['old_password']
+        new_password = serializer.validated_data['new_password']
+
+        if not user.check_password(old_password):
+            return Response({"error":"Old password is incorrect."}, status=400)
+
+        user.set_password(new_password)
+        user.save()
+        return Response({'message':'Password updated successfully'})
+    return Response(serializer.errors,status=404)
+
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])

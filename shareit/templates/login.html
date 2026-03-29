@@ -1,7 +1,15 @@
-{% extends "base.html" %}
 {% load static %}
-{% block title %}Login{% endblock %}
-{% block content %}
+<!doctype html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
     <div id="login-section" class="login-container">
         <div class="login-card">
             <h2>Login</h2>
@@ -16,5 +24,4 @@
     </div>  
     <script src="{% static 'js/api.js' %}"></script>
     <script src="{% static 'js/login.js' %}"></script>
-    <script src="{% static 'js/navbar.js' %}"></script>
-{% endblock %}
+</body>

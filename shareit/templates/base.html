@@ -1,25 +1,70 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-    {% block content %}{% endblock %}
-    <div id="comment-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeCommentModal()">✖</button>
-    
-            <div id="modal-comments"></div>
-    
-        </div>
-        <div class="comment-box-inp">
-            <input type="text" id="modal-comment-input" placeholder="Write a comment...">
-            <button class="send-comment-btn" onclick="submitModalComment()">Send</button>
-        </div>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+  
+      <!-- Header -->
+      <div id="navbar"></div>
+  
+      <!-- Sidebar -->
+      <div id="sidebar">
+        <ul class="menu">
+          <li onclick="goTo('feed')">🏠 Feed</li>
+          <li onclick="goTo('profile')">👤 Profile</li>
+          <li onclick="goTo('search')">🔍 Search</li>
+          <li onclick="goTo('messages')">💬 Messages</li>
+          <li onclick="goTo('notifications')">🔔 Notifications</li>
+          <li onclick="goTo('post')">➕ Post</li>
+          <li onclick="goTo('changePassword')" class="changePasswordNav">🔒Change Password</li>
+        </ul>
+      </div>
+  
+      <!-- Main Content -->
+      <div class="main-content">
+        {% block content %}{% endblock %}
+      </div>
+  
+      <!-- Footer / Bottom Bar -->
+      <div class="bottom-bar">
+        <ul class="menu">
+          <li onclick="goTo('feed')">🏠</li>
+          <li onclick="goTo('profile')">👤</li>
+          <li onclick="goTo('search')">🔍</li>
+          <li onclick="goTo('messages')">💬</li>
+          <li onclick="goTo('notifications')">🔔</li>
+          <li onclick="goTo('post')">➕</li>
+          <li onclick="goTo('changePassword')" class="changePasswordNav">🔒</li>
+        </ul>
+      </div>
+  
     </div>
-<script src="{% static 'js/app.js' %}"></script>
-</body>
+  
+    <!-- Modal stays outside grid -->
+    <div id="comment-modal" class="modal-overlay">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeCommentModal()">✖</button>
+        <div id="modal-comments"></div>
+      </div>
+      <div class="comment-box-inp">
+        <input type="text" id="modal-comment-input" placeholder="Write a comment..." />
+        <button class="send-comment-btn" onclick="submitModalComment()">Send</button>
+      </div>
+    </div>
+  
+    <script src="{% static 'js/app.js' %}"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        handleChangePasswordVisibility();
+      });
+    </script>
+  </body>
 </html>

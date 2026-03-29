@@ -1,6 +1,5 @@
 
 function login() {
-    console.log(API)
     
     fetch(`${API}/token/`, {
         method: "POST",
@@ -19,7 +18,6 @@ function login() {
     })
 
     .then(data => {
-        localStorage.setItem("access", data.access);
         window.location.href = "/";
 
     })
