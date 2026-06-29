@@ -56,19 +56,26 @@ INSTALLED_APPS = [
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://192.168.1.8:3000",
-    "http://127.0.0.1:5500",
-    "http://localhost:3000",
-    "https://sharelyapp.vercel.app"
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://192.168.1.8:3000",
+#     "http://127.0.0.1:8080",
+#     "http://127.0.0.1:5500",
+#     "http://localhost:3000",
+#     "https://sharelyapp.vercel.app"
+# ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://sharelyapp.vercel.app"
+    "https://sharelyapp.vercel.app",
+    "https://127.0.0.1:8001",
+    "https://127.0.0.1:8080"
+
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_SECURE = False   # for localhost
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SAMESITE = 'Lax'  # or 'None' (if cross-origin)
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
@@ -120,8 +127,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-import dj_database_url
-import os
+
+
 
 # DATABASES = {
 #     'default': dj_database_url.parse(
@@ -173,8 +180,7 @@ STATIC_URL = 'static/'
 
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-import os
-import dj_database_url
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

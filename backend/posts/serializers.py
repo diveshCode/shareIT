@@ -1,6 +1,29 @@
 from rest_framework import serializers
 from .models import *
 
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Messages
+        fields = "__all__"
+
+class UsersSerializer(serializers.ModelSerializer):
+    profile_image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['id','username','first_name','last_name','profile_image']
+
+    def get_profile_image(self, obj):
+        if hasattr(obj, "profile") and obj.profile.profile_image:
+            return obj.profile.profile_image.url
+        return None
+
+class LoggedPerson(serializers.ModelSerializer):
+     class Meta:
+        model = User
+        fields = ['id','username','first_name','last_name']
+
+
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField()
     new_password = serializers.CharField()
@@ -30,7 +53,7 @@ class registerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'email', 'password','first_name','last_name']
 
     def validate_username(self, value):
         if User.objects.filter(username=value).exists():
@@ -39,6 +62,8 @@ class registerSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         user = User.objects.create_user(
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
             username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password']
@@ -109,6 +134,8 @@ class PostSerializer(serializers.ModelSerializer):
 
 class ProfileDetailSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username", read_only=True)
+    first_name = serializers.CharField(source="user.first_name", read_only=True)
+    last_name = serializers.CharField(source="user.last_name", read_only=True)
     email = serializers.CharField(source="user.email", read_only=True)
     total_posts = serializers.SerializerMethodField()
     posts = serializers.SerializerMethodField()
@@ -117,6 +144,8 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
         model = Profile
         fields = [
             'username',
+            'first_name',
+            'last_name',
             'email',
             'bio',
             'profile_image',

@@ -12,17 +12,20 @@
         <input type="text" id="username-input" placeholder="Username">
         <textarea id="bio-input" placeholder="Bio"></textarea>
         <input type="file" id="profile-image">
-    
+        <!-- <button id="removeProfileImage" value="">Remove Profile Image</button> -->
         <button id="update-btn" >Update</button>
+        <P id="update-error"></P>
     </div>
   <!-- old -->
     <div class="profile-header">
       <div class="profile-image">
         <img id="user-profile" />
+        <span id="edit-image-btn">✎</span>
       </div>
 
       <div class="profile-info">
-        <h2 id="username-profile"></h2>
+        <span id="name-profile"></span>
+        <span id="username-profile"></span>
         <h3 id="bio"></h3>
         <p id="email"></p>
 
@@ -40,12 +43,14 @@
       <!-- <button type="button" id="goto-post" onclick="gottopost()">Wanna Post ?</button> -->
       <div id="post">
       </div>
+      <div id="load-more-trigger"></div>
     </div>
 
   </div>
 </div>
   <script src="{% static 'js/api.js' %}"></script>
   <script src="{% static 'js/navbar.js' %}"></script>
+  <script src="{% static 'js/chat.js' %}"></script>
   <script src="{% static 'js/posts.js' %}" defer></script>
   <script src="{% static 'js/profile.js' %}" defer></script>
   <script src="{% static 'js/feed.js' %}" defer></script>

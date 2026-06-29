@@ -1,45 +1,39 @@
+
+let allPosts = [];
 let nextPageUrl = `${API}/posts/`;
 let loadingPosts = false;
 
-
 window.addEventListener("scroll", () => {
-
     if (
         window.innerHeight + window.scrollY >=
         document.body.offsetHeight - 300
     ) {
         loadPosts();
     }
-
 });
 
 const searchInput = document.getElementById("searchInput");
-
 let searchTimeout;
-
-
 
 if (searchInput) {
     searchInput.addEventListener("keyup", function () {
-
         clearTimeout(searchTimeout);
 
         const query = this.value.trim();
 
         searchTimeout = setTimeout(() => {
-
             const postSection = document.getElementById("feeds");
 
-            // If empty → reset feed
             if (query === "") {
-                nextPageUrl = `${API}/posts/`;  // reset pagination
-                postSection.innerHTML = "";     // clear old posts
+                allPosts = [];
+                nextPageUrl = `${API}/posts/`;
+                postSection.innerHTML = "";
                 loadPosts();
                 return;
             }
 
-            // Search fetch
             loadingPosts = true;
+
             fetch(`${API}/posts/?search=${encodeURIComponent(query)}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -47,9 +41,11 @@ if (searchInput) {
             })
             .then(res => res.json())
             .then(data => {
-                nextPageUrl = data.next;   // update for infinite scroll
-                postSection.innerHTML = ""; // clear previous posts
-                renderPosts(data.results, postSection);
+                nextPageUrl = data.next;
+                allPosts = data.results;
+
+                renderPosts(allPosts, postSection);
+
                 loadingPosts = false;
             })
             .catch(err => {
@@ -57,14 +53,15 @@ if (searchInput) {
                 loadingPosts = false;
             });
 
-        }, 300); // wait 300ms after typing
+        }, 300);
     });
 }
 
 
-function loadPosts() {
+loadPosts();
 
-    if (!nextPageUrl || loadingPosts) return;
+function loadPosts() {
+    if (loadingPosts || !nextPageUrl) return;
 
     loadingPosts = true;
 
@@ -75,17 +72,34 @@ function loadPosts() {
     })
     .then(res => res.json())
     .then(data => {
-
         nextPageUrl = data.next;
 
-        const postSection = document.getElementById("feeds");
         allPosts.push(...data.results);
-        renderPosts(data.results, postSection);
+
+        renderPosts(allPosts, document.getElementById("feeds"));
 
         loadingPosts = false;
+
+        // If page still too short, load more automatically
+        if (
+            nextPageUrl &&
+            document.documentElement.scrollHeight <= window.innerHeight + 100
+        ) {
+            loadPosts();
+        }
     })
     .catch(err => {
         console.error(err);
         loadingPosts = false;
     });
 }
+
+const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+        loadPosts();
+    }
+});
+
+observer.observe(document.getElementById("load-more-trigger"));
+
+loadPosts();

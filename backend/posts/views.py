@@ -7,11 +7,67 @@ from .serializers import *
 from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes, parser_classes
+from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from .pagination import PostPagination
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.contrib.auth.hashers import check_password
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    print(user.email)
+    profile = get_object_or_404(Profile, user_id=user.id)
+
+    serializer = ProfileDetailSerializer(
+        profile,
+        context={"request": request}
+    )
+
+    return Response(serializer.data)
+
+
+@permission_classes([AllowAny])
+class SendMessageView(APIView):
+    def post(self, request):
+        print("DATA:", request.data)
+
+        sender_id = request.data.get("sender")
+        receiver_id = request.data.get("receiver")
+        content = request.data.get("message")
+
+        try:
+            # sender = User.objects.get(id=sender_id)
+            sender = get_object_or_404(id=sender_id)
+            receiver = get_object_or_404(id=receiver_id)
+            # receiver = User.objects.get(id=receiver_id)
+
+            msg = Messages.objects.create(
+                sender=sender,
+                receiver=receiver,
+                content=content
+            )
+
+            return Response({"status": "saved"})
+
+        except Exception as e:
+            print("ERROR:", e)
+            return Response({"error": str(e)}, status=400)
+
+
+@permission_classes([IsAuthenticated])
+class ChatHistoryView(APIView):
+    def get(self, request, user_id):
+        me = request.user
+
+        messages = Messages.objects.filter(
+            Q(sender=me, receiver_id=user_id) |
+            Q(sender_id=user_id, receiver=me)
+        ).order_by("created_at")
+        
+        serializer = MessageSerializer(messages, many=True)
+        return Response(serializer.data)
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
@@ -114,12 +170,9 @@ def register(request):
     user = registerSerializer(data=request.data)
     if user.is_valid():
         user.save()
-        return Response({"message": "User created successfully"}, status=201)
+        return Response({"message": "User created successfully","status":"success"}, status=201)
     return Response(user.errors, status=400)
 
-
-
-from rest_framework.parsers import MultiPartParser, FormParser
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -159,8 +212,6 @@ def like_post(request, post_id):
 
 
 
-
-from django.shortcuts import get_object_or_404
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def add_comment(request, post_id):
@@ -184,4 +235,22 @@ def user_profile(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
 
     serializer = ProfileDetailSerializer(profile, context={"request": request})
+    return Response(serializer.data)
+
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def users(request):
+    users = User.objects.exclude(id=request.user.id)
+    serializer = UsersSerializer(users,many=True, context={"request": request})
+    return Response(serializer.data)
+
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def logged_user(request):
+    user = User.objects.get(id=request.user.id)
+    serializer = LoggedPerson(user, context={"request": request})
     return Response(serializer.data)

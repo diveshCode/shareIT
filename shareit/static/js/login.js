@@ -1,11 +1,10 @@
 
 function login() {
-    
     fetch(`${API}/token/`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            username: document.getElementById("username").value,
+            username: `@${document.getElementById("username").value}`,
             password: document.getElementById("password").value
         })
     })
@@ -18,12 +17,15 @@ function login() {
     })
 
     .then(data => {
-        window.location.href = "/";
-
+        console.log(data)
+        localStorage.setItem("access", data.access)
+        localStorage.setItem("refresh", data.refresh)
+        localStorage.setItem("token", data.access);
+        logged();
+        // window.location.href = "/";
     })
 
     .catch(err => {
         document.getElementById("login-error").innerText = "Invalid username or password";
     });
 }
-

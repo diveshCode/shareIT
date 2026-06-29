@@ -1,7 +1,13 @@
-let activePostId = null;
-let allPosts = [];
 
 /* ================= DELETE ================= */
+let userId = 70;
+
+function profile_of_post(username) {
+    window.location.href = `/profile/${username}/`;
+}
+
+
+
 
 async function deletePost(post_id) {
 
@@ -36,7 +42,7 @@ function renderComments(comments) {
 
     modalComments.innerHTML = comments.map(comment => `
         <div class="comment-item" id="comment-${comment.id}">
-            <strong>${comment.user}</strong>
+            <strong id="commentor"> ${comment.user}</strong>
 
             ${
                 comment.is_owner
@@ -47,7 +53,7 @@ function renderComments(comments) {
                 : ""
             }
 
-            <br>${comment.text}
+            <br><span id="commented">${comment.text}</span>
 
             <div class="com-date">${comment.created_at.slice(0,10)}</div>
             <hr>
@@ -102,7 +108,7 @@ function renderPosts(posts, postSection) {
                     }
 
                     <div class="user-name-delete">
-                        <span class="post-user">${post.user}</span>
+                        <a onclick="profile_of_post('${post.user}')" target="_blank" class="post-user">${post.user}</a>
                         
                         ${  
                             post.is_owner
@@ -141,8 +147,7 @@ function renderPosts(posts, postSection) {
     })};
 
     // postSection.innerHTML = postsHTML;
-    postSection.insertAdjacentHTML('beforeend', postsHTML);
-    attachPostEvents(postSection);
+    postSection.innerHTML = postsHTML;
 }
 
 
@@ -205,12 +210,12 @@ function submitComment(postId, text) {
 }
 
 function likePost(postId) {
-
+    console.log("likePost called");
     if (!token) {
         alert("Login required");
         return;
     }
-
+    
     fetch(`${API}/like/${postId}/`, {
         method: "POST",
         headers: {
@@ -278,24 +283,35 @@ function submitModalComment() {
 
 
 function attachPostEvents(postSection) {
-
+    console.count("attachPostEvents");
     postSection.addEventListener("click", function (e) {
 
         const deleteBtn = e.target.closest(".delete-post");
         const likeBtn = e.target.closest(".like-btn");
         const commentBtn = e.target.closest(".comment-btn");
-        
+
         if (deleteBtn) {
-            deletePost(deleteBtn.getAttribute("data-id"));
+            deletePost(deleteBtn.dataset.id);
         }
 
         if (likeBtn) {
-            likePost(likeBtn.getAttribute("data-id"));
+            likePost(likeBtn.dataset.id);
         }
 
         if (commentBtn) {
-            openCommentModal(commentBtn.getAttribute("data-id"));
+            openCommentModal(commentBtn.dataset.id);
         }
-
     });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const feeds = document.getElementById("feeds");
+    if (feeds) {
+        attachPostEvents(feeds);
+    }
+
+    const post = document.getElementById("post");
+    if (post) {
+        attachPostEvents(post);
+    }
+});

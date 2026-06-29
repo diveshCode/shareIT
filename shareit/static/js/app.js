@@ -1,6 +1,5 @@
 
 
-
 function updateUI() {
     const nav = document.getElementById("nav-buttons");
 
@@ -19,18 +18,13 @@ function updateUI() {
 
 function goTo(page) {
     const username = localStorage.getItem("username");
-
+    console.log(username)
     switch(page) {
         case "feed":
             window.location.href = "/";
             break;
 
         case "profile":
-            if (!username) {
-                window.location.href = "/login/";
-                return;
-            }
-
             window.location.href = `/profile/${username}/`;
             break;
 
@@ -47,7 +41,8 @@ function goTo(page) {
             break;
 
         case "notifications":
-            window.location.href = "/notifications/";
+            // window.location.href = "/notifications/";
+            alert("This feature is comming soon...")
             break;
 
         case "post":

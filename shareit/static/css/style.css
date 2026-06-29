@@ -41,15 +41,15 @@ body {
 
 #sidebar {
   grid-area: sidebar;
-  background: #1e1e1e;
-  color: white;
+  background: #ffdbdb;
+  color: rgb(7, 6, 6);
 }
 
 
 .bottom-bar {
   grid-area: bottom;
-  background: #111;
-  color: white;
+  background: #e7e0e0;
+  color: rgb(12, 11, 11);
 }
 
 .main-body{
@@ -79,13 +79,16 @@ body {
       position: fixed;
       bottom: 0;
       width: 100%;
+      
     }
 
   }
 
 /* MOBILE */
 @media (max-width: 768px) {
-
+    .message-container {
+        margin-bottom: 62px;
+    }
 
     .profile-content {
         padding: 10px;
@@ -122,10 +125,12 @@ body {
 
     .menu{
         display: flex;
+        margin-right:18px;
         text-decoration: none;
         width: 100%;
+        align-items: center;
         justify-content: space-evenly;
-        cursor: pointer;
+
     }
 
     ul,li{
@@ -133,8 +138,9 @@ body {
         list-style: none;
         margin: 0;
     }
-
+    
     li{
+        margin-left: 0;
         cursor: pointer;
     }
 
@@ -175,14 +181,18 @@ body {
         width: 100%;
         margin: 0;
     }
+
+    .fa-solid{
+        color: #000000;
+    }
 }
 
 
 
 /* SIDEBAR */
 #sidebar {
-    background: #111;
-    color: white;
+    background: #ebe4e4;
+    color: rgb(19, 18, 18);
 }
 
 
@@ -240,7 +250,8 @@ body {
 
 
 .app-name{
-    font-family: cursive;
+    font-weight: 300;
+    font-family:fantasy;
     width: fit-content;
     cursor: pointer;
 }
@@ -289,6 +300,38 @@ body {
     background: #dde1ea;
 }
 
+.fa-solid ,.fa-jelly-fill{
+    color: #111010;
+}
+
+.fa-house:hover{
+    color: #46e576;
+    transform: scale(1.2);
+}
+
+.fa-magnifying-glass:hover{
+    color: #00d2f7;
+    transform: scale(1.2);
+}
+
+.fa-message:hover{
+    color: #d8a04c;
+    transform: scale(1.2);
+}
+
+.fa-plus{
+    font-size: 24px;
+}
+
+.fa-plus:hover{
+    color: #0e0244;
+    transform: scale(1.2);
+}
+
+.fa-key:hover{
+    color: #eb0c0c;
+    transform: scale(1.2);
+}
 
 /* login */
 .login-container {
@@ -387,6 +430,7 @@ button {
     box-sizing: border-box;
 }
 
+
 /* ===== PROFILE HEADER ===== */
 
 .profile-header {
@@ -394,7 +438,7 @@ button {
     align-items: center;
     gap: 30px;
     background: white;
-    padding: 25px;
+    padding: 15px;
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
@@ -408,6 +452,12 @@ button {
     object-fit: cover;
 }
 
+#edit-image-btn{
+    position:relative;
+    font-size: 20px;
+    background: #a50b0b;
+}
+
 .profile-image img {
     width: 100%;
     height: 100%;
@@ -417,9 +467,13 @@ button {
 
 /* ===== PROFILE INFO ===== */
 
-.profile-info h2 {
-    margin-bottom: 20px;
+.profile-info h4 {
+    /* margin-bottom: 20px; */
     font-size: 26px;
+}
+
+.profile-info{
+    height: fit-content;
 }
 
 .profile-info p {
@@ -436,8 +490,14 @@ button {
     text-align: center;
 }
 
-.profile-stats strong {
-    font-size: 20px;
+#commented{
+    font-size: 18px;
+    color: #111;
+}
+
+#commentor {
+    font-size: 15px;
+    color: #545252;
 }
 
 /* ===== POSTS SECTION ===== */
@@ -453,12 +513,12 @@ button {
     width: 100%;
     max-width: 700px;   /* desktop size */
     margin-top:20px;
+    padding-bottom: 20px;
 }
 
-/* #post{
-    width: 100%;
-    margin: 0 auto;
-} */
+a{
+    cursor: pointer;
+}
 
 .profile-posts h3 {
     margin-bottom: 15px;
@@ -482,11 +542,17 @@ button {
     text-decoration: none;
 }
 
-#username-profile {
+#name-profile{
     font-size: 24px;
     font-weight: bold;
     text-align: center;
-    
+}
+
+#username-profile {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    color: #756f6f;
 }
 
 .post-stats {
@@ -934,7 +1000,7 @@ img.post-pic {
 }
 
 #sidebar .menu li:hover {
-    background: #333;
+    background: #a59f9f;
 }
 
 #feeds{
@@ -944,4 +1010,184 @@ img.post-pic {
 
 .layout {
     display: flex;
+}
+
+/* message section  */
+
+.message {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 10px;
+    max-width: 60%;
+}
+
+.sent {
+    background: #dcf8c6;
+    align-self: flex-end;   /* ✅ RIGHT SIDE */
+}
+
+.received {
+    background: #dda8a8;
+    align-self: flex-start; /* ✅ LEFT SIDE */
+}
+
+.message-container {
+    border-color: #01ff9e;
+    border-radius: 8px;
+    border: 4px solid rgb(90, 83, 83);
+    display: flex;
+    height: 100%;
+}
+
+.sidechatbar {
+    width: 30%;
+    background: #858383;
+    padding: 10px;
+}
+
+.user {
+    padding: 10px;
+    background: rgb(218, 210, 210);
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-radius: 9px;
+}
+
+.chat {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.message {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    width: fit-content;
+    word-wrap: break-word;      /* ✅ break long words */
+    overflow-wrap: break-word;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;   /* 🔥 THIS FIX */
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.input-area {
+    display: none;
+    padding: 10px;
+    font-size: 20px;
+}
+
+#messageInput {
+    border-radius: 9px;
+    flex: 1;
+    padding: 8px;
+}
+
+#msg-btn {
+    padding: 13px;
+    margin: 5px;
+    border: none;
+    border-radius: 12px;
+    background-color: #2600ff;
+}
+
+#chat-person{
+    height: 50%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+#chat-select-msg{
+    font-size: larger;
+    font-weight: bold;
+}
+
+.chat-person-container{
+    /* background: #b88282; */
+    justify-content: center;
+    align-items: center;
+    border-radius: 9px;
+    height: 50px;
+    padding: 8px;
+}
+
+.inbox-chat-person{
+    height: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.inbox-pic{
+    height: 100%;
+    width: 100%;
+}
+
+#inbox-pic-icon{
+    font-size: 50px;
+}
+
+/* chat row */
+/* Sidebar container */
+
+/* Each user block */
+.user {
+    background: floralwhite;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+/* Hover effect */
+.user:hover {
+    background-color: #ffffff;
+}
+
+/* Row layout (image + name) */
+.user-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Profile image */
+.chat-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Default icon */
+.user i {
+    font-size: 40px;
+    color: #050505;
+}
+
+.inbox-pic{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.chat-person-name{
+    font-weight: bold;
+    font-size: 20px;
+}
+/* Username text */
+.user-row span {
+    font-size: 16px;
+    font-weight: 500;
 }
