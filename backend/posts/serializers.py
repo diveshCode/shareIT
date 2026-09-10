@@ -236,26 +236,33 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
 
 
 
-
-# chat/serializers.py
-
-# chat/serializers.py
-
-
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     profile_image = serializers.SerializerMethodField()
+    # profile_image = serializers.CharField("profile_image")
 
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'username', 'profile_image']
 
     def get_profile_image(self, obj):
-        # agar tumhare User model me profile_image field hai to use karo
-        if hasattr(obj, 'profile_image') and obj.profile_image:
-            request = self.context.get('request')
-            return request.build_absolute_uri(obj.profile_image.url) if request else obj.profile_image.url
+        try:
+            profile = obj.profile
+
+            if profile.profile_image:
+                request = self.context.get('request')
+
+                if request:
+                    return request.build_absolute_uri(
+                        profile.profile_image.url
+                    )
+
+                return profile.profile_image.url
+
+        except Profile.DoesNotExist:
+            pass
+
         return None
 
 class MessageSerializer(serializers.ModelSerializer):

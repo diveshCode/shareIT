@@ -356,13 +356,25 @@ def register(request):
 @parser_classes([MultiPartParser, FormParser])
 def create_post(request):
     print(request.FILES)
+    video = request.FILES.get('video')
+
+    video_url = None
+
+    if video:
+        result = cloudinary.uploader.upload_large(
+            video,
+            resource_type='video'
+        )
+
+        video = result['secure_url']
+
     serializer = PostSerializer(
         data=request.data,
         context={'request': request}
     )
 
     if serializer.is_valid():
-        serializer.save(user=request.user)
+        serializer.save(user=request.user,video=video_url)
         return Response(serializer.data)
 
     return Response(serializer.errors)

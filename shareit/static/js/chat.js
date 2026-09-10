@@ -1,4 +1,4 @@
-console.log("JS LOADED");
+
 
 let currentUser = null;
 
@@ -42,7 +42,7 @@ function logged() {
         return res.json();
     })
     .then(data => {
-        console.log("person:", data);
+        // console.log("person:", data);
         localStorage.setItem("user_id", data.id);
         localStorage.setItem("username", data.username);
     })
@@ -59,17 +59,17 @@ fetch(`${API}/users/`, {
     return res.json();
 })
 .then(data => {
-    console.log("USERS:", data);
+    // console.log("USERS:", data);
     displayUsers(data);
 })
-.catch(err => console.log("ERROR:", err));
+.catch(err => {console.log("ERROR:", err)});
 
 
 function displayUsers(data) {
     logged();
     const userlist = document.getElementById("sidechats");
     userlist.innerHTML = "<h3>Chats</h3>";
-
+    console.log(data)
     // AI chat entry (agar rakhna hai to alag se handle hoga, neeche note dekho)
     const div = document.createElement("div");
     div.classList.add("user");
@@ -92,8 +92,9 @@ function displayUsers(data) {
     data.forEach(user => {
         const div = document.createElement("div");
         div.classList.add("user");
+    
         const name = `
-        <div class="user-row">
+        <div class="user-row" id=${'user-'+user.id} >
             ${
                 user.profile_image
                 ? `<img class="chat-pic" src="${user.profile_image}" />`
@@ -124,6 +125,18 @@ function selectUser(userId, name) {
     const name_container = document.getElementById("chat-person-container");
     const chat_Select_msg = document.getElementById("chat-select-msg");
     const name_person = document.getElementById("chat-person");
+    const user = document.getElementById(`user-${userId}`)
+    console.log(user)
+    document.querySelectorAll(".user-row").forEach(user => {
+        user.style.backgroundColor = "";
+    });
+
+    // Ab selected chat ka background change karo
+    // const user = document.getElementById(`user-${userId}`);
+
+    if (user) {
+        user.style.backgroundColor = "#e7ddff";
+    }
 
     chat_Select_msg.style.display = 'none';
     inputContainer.style.display = 'flex';
@@ -155,7 +168,9 @@ function selectUser(userId, name) {
         data.forEach(msg => {
             if (msg.sender == myId) {
                 addMessage(msg.content, "sent");
-            } else {
+            } 
+            else 
+            {
                 addMessage(msg.content, "received");
             }
         });
@@ -205,6 +220,7 @@ function sendMessage() {
 
 function addMessage(text, type) {
     const div = document.createElement("div");
+    
     div.classList.add("message", type);
     div.innerText = text;
     document.getElementById("messages").appendChild(div);

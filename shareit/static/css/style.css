@@ -13,6 +13,7 @@ body {
 
 
 .main-content {
+    
     grid-area: main;
     box-sizing: border-box;
     overflow-y: auto;
@@ -36,7 +37,7 @@ body {
 }
 
 .nav-icons{
-    margin-right: 15px;
+    margin-left: 15px;
 }
 
 /* AREAS */
@@ -228,7 +229,7 @@ body {
     justify-content: space-between;
     align-items: center;
 
-    padding: 0 20px;
+    padding: 0 10px;
     background: #ffffff;
     border-bottom: 1px solid #ddd;
 
@@ -270,7 +271,7 @@ body {
 .logo {
     width: 90px;
     height: 90px;
-    margin-right: 20px;
+    margin-right: 10px;
     cursor:pointer; 
     align-items:center; 
     border-radius: 50%;
@@ -342,6 +343,95 @@ body {
 .fa-key:hover{
     color: #eb0c0c;
     transform: scale(1.2);
+}
+
+/* password */
+
+.password-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+}
+
+/* Card */
+.password-card {
+    background: #1e1e2f;
+    padding: 30px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 400px;
+    color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+/* Title */
+.password-card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+/* Button */
+.password-card button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #edf1ed;
+    color: rgb(17, 15, 15);
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.password-card button:hover {
+    background: #45a049;
+}
+
+/* Message */
+#message-pass {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .password-card {
+        padding: 20px;
+    }
+
+    .password-card h2 {
+        font-size: 18px;
+    }
+
+    .input-group input {
+        padding: 8px;
+    }
+
+    .password-card button {
+        padding: 10px;
+    }
 }
 
 /* login */
@@ -717,7 +807,7 @@ a{
 
 .post-card {
     background: white;
-    width: 96%;
+
     border-radius: 12px;
     padding: 15px;
     margin-bottom: 20px;
@@ -1119,7 +1209,7 @@ img.post-pic {
 #feeds{
     margin:0 auto;
     width: 100%;
-    
+    padding-bottom: 8px;
 }
 
 
@@ -1160,7 +1250,6 @@ img.post-pic {
 }
 
 .user {
-    padding: 10px;
     background: rgb(218, 210, 210);
     margin-bottom: 5px;
     cursor: pointer;
@@ -1169,14 +1258,13 @@ img.post-pic {
 }
 
 .chat {
-    /* margin-top: 20px; */
     width: 70%;
     display: flex;
     flex-direction: column;
 }
 
 .messages {
-    background: #531f1feb;
+    background: #76ece6da;
     flex: 1;
     padding: 10px;
     overflow-y: auto;
@@ -1201,22 +1289,25 @@ img.post-pic {
 
 .input-area {
     display: none;
-    padding: 10px;
-    font-size: 20px;
+    padding: 8px;
+    font-size: 16px;
 }
 
 #messageInput {
     border-radius: 9px;
     flex: 1;
+    height: 40px;
+    margin: auto 0;
     padding-left: 18px;
 }
 
 #msg-btn {
-    padding: 13px;
+    padding: 8px;
+    font-size: 20px;
     margin: 5px;
     border: none;
     border-radius: 12px;
-    background-color: #2600ff;
+    background-color: #12e482;
 }
 
 #chat-person{
@@ -1232,11 +1323,10 @@ img.post-pic {
 }
 
 .chat-person-container{
-    /* background: #b88282; */
     justify-content: center;
     align-items: center;
     border-radius: 9px;
-    height: 70px;
+
     padding: 8px;
 }
 
@@ -1261,7 +1351,7 @@ img.post-pic {
 /* Each user block */
 .user {
     background: rgb(231, 207, 159);
-    padding: 10px;
+    /* padding: 10px; */
     border-radius: 10px;
     cursor: pointer;
     transition: 0.2s;
@@ -1275,6 +1365,8 @@ img.post-pic {
 /* Row layout (image + name) */
 .user-row {
     display: flex;
+    padding: 10px;
+    border-radius: 10px;
     align-items: center;
     gap: 12px;
 }

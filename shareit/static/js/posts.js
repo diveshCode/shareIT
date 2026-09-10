@@ -39,7 +39,7 @@ function renderComments(comments) {
         modalComments.innerHTML = `<div class="no-comments">No comments yet</div>`;
         return;
     }
-    console.log(comments)
+    // console.log(comments)
     modalComments.innerHTML = comments.map(comment => `
         <div class="comment-item" id="comment-${comment.id}">
             <span id="commentor"> @${comment.user}</span>
@@ -80,7 +80,7 @@ function updateCommentCount(postId) {
 
 
 function renderPosts(posts, postSection) {
-    // console.log("this funtion is renderPosts.")
+    
     console.log(posts)
     if (!postSection) return;
 
@@ -126,7 +126,7 @@ function renderPosts(posts, postSection) {
 
                 ${post.image ? `<img src="${base}${post.image}" />` : ""}
 
-                ${post.video ? `<video controls src="${base}${post.video}"></video>` : ""}
+                ${post.video ? `<video controls src="${post.video}"></video>` : ""}
 
                 <div class="post-actions">
                     <button class="like-btn" data-id="${post.id}">
@@ -208,7 +208,7 @@ function submitComment(postId, text) {
 }
 
 function likePost(postId) {
-    console.log("likePost called");
+    // console.log("likePost called");
     if (!token) {
         alert("Login required");
         return;
@@ -281,7 +281,7 @@ function submitModalComment() {
 
 
 function attachPostEvents(postSection) {
-    console.count("attachPostEvents");
+    // console.count("attachPostEvents");
     postSection.addEventListener("click", function (e) {
 
         const deleteBtn = e.target.closest(".delete-post");

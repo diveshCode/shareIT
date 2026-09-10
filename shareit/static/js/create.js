@@ -42,6 +42,7 @@ function createPost() {
   })
     .then((res) => res.json())
     .then((data) => {
+      console.log(data)
       document.getElementById("post-message").innerText = "Post created!";
       window.location.href = "/";
     })

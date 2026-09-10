@@ -59,7 +59,7 @@ function profile() {
         const data = await res.json();
     
         if (!res.ok) {
-            console.error(data);
+            // console.error(data);
             return;
         }
     
@@ -76,7 +76,7 @@ function profile() {
         document.getElementById("bio").innerText = data.bio || "";
 
         const profileImg = document.getElementById("user-profile");
-        console.log(data)
+        // console.log(data)
         if (data.profile_image) {
             profileImg.src = `${base}${data.profile_image}`;
         } else {
@@ -90,7 +90,7 @@ function profile() {
         
         // Show edit only if own profile
         const loggedUser = localStorage.getItem("username");
-        console.log(loggedUser)
+        // console.log(loggedUser)
         if (loggedUser === data.username) {
             document.getElementById("edit-btn").style.display = "block";
         } else {

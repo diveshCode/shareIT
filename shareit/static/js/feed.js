@@ -100,6 +100,6 @@ const observer = new IntersectionObserver(entries => {
     }
 });
 
-observer.observe(document.getElementById("load-more-trigger"));
+// observer.observe(document.getElementById("load-more-trigger"));
 
 loadPosts();

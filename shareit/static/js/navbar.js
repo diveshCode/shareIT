@@ -1,7 +1,7 @@
 
 
 function loadNavbar() {
-    console.log("Navbar loaded");
+    // console.log("Navbar loaded");
     const navbar = document.getElementById("navbar");
 
     navbar.innerHTML = `
