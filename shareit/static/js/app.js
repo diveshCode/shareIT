@@ -28,8 +28,13 @@ function goTo(page) {
             window.location.href = `/profile/${username}/`;
             break;
 
-        case "search":
-            document.getElementById("searchInput").focus();
+            case "search":
+                if(window.location.pathname !== "/"){
+                    window.location.href = "/"
+                    document.getElementById("searchInput").focus();
+                } else{
+                    document.getElementById("searchInput").focus();
+            }
             break;
 
         case "changePassword":

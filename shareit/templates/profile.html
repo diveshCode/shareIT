@@ -11,7 +11,6 @@
     <div id="edit-form" class="edit-form">
         <input type="text" id="username-input" placeholder="Username">
         <textarea id="bio-input" placeholder="Bio"></textarea>
-        <input type="file" id="profile-image">
         <!-- <button id="removeProfileImage" value="">Remove Profile Image</button> -->
         <button id="update-btn" >Update</button>
         <P id="update-error"></P>
@@ -21,6 +20,25 @@
       <div class="profile-image">
         <img id="user-profile" />
         <span id="edit-image-btn">✎</span>
+        <div id="edit-image-form" class="edit-image-form">
+
+          <span class="close-btn" id="closeEditImage">&times;</span>
+      
+          <h3>Update Profile Image</h3>
+      
+          <input type="file" id="profile-image">
+      
+          <button id="update-image-btn">Update</button>
+      
+          <span class="divider">OR</span>
+      
+          <button id="removeProfileImage" class="remove-btn" value="null">
+              Remove Profile Image
+          </button>
+      
+          <p id="update-error"></p>
+      
+      </div>
       </div>
 
       <div class="profile-info">

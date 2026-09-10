@@ -59,7 +59,7 @@ function attachNavbarEvents() {
     }
     });
   
-    console.log("home loaded");
+   
     // Home click
     const appName = document.querySelector(".app-name");
     if (appName) {

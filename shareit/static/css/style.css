@@ -1,8 +1,14 @@
+*{
+    box-sizing: border-box;
+}
+
+
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     background: #f3f4f6;
+    
 }
 
 
@@ -10,7 +16,7 @@ body {
     grid-area: main;
     box-sizing: border-box;
     overflow-y: auto;
-  
+    scrollbar-width: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -64,11 +70,12 @@ body {
 @media (max-width: 768px) {
     .container {
       grid-template-columns: 1fr;
+      grid-template-rows: 60px 1fr 60px;
   
       grid-template-areas:
         "navbar"
         "main"
-        "bottom";
+        "bottom-bar";
     }
   
     #sidebar {
@@ -87,7 +94,7 @@ body {
 /* MOBILE */
 @media (max-width: 768px) {
     .message-container {
-        margin-bottom: 62px;
+        margin-bottom: 2px;
     }
 
     .profile-content {
@@ -113,8 +120,8 @@ body {
     .bottom-bar {
         display: flex;
         flex-direction: column;
-        position: fixed;
-        bottom: 0;
+        /* position: fixed;
+        bottom: 0; */
         width: 100%;
         height: 60px;
         background: white;
@@ -170,6 +177,7 @@ body {
     .search-container {
         position: fixed;
         width: 100%;
+        height: 66px;
         margin: auto;
     }
     
@@ -178,7 +186,9 @@ body {
     }
     
     #searchInput {
+        background: #000;
         width: 100%;
+        height: 100%;
         margin: 0;
     }
 
@@ -225,9 +235,11 @@ body {
     z-index: 1000;
 }
 
+/* search  */
+
 #searchInput {
     width: 90%;
-    height: 20px;
+    height: 40px;
     background-color: #ffffff;
     font-size: medium;
     padding: 10px;
@@ -243,9 +255,8 @@ body {
     position: sticky;   /* better than fixed */
     top: 0%;          /* below navbar */
     width: 100%;
-    background: #f3f4f6;
     padding: 10px;
-    z-index: 10;
+    z-index: 0;
   }
 
 
@@ -444,6 +455,92 @@ button {
 }
 
 /* ===== PROFILE IMAGE ===== */
+.edit-image-form{
+    cursor: pointer;
+    display: none;               /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.2);
+    z-index: 1000;
+}
+
+.edit-image-form h3{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.edit-image-form input[type="file"]{
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.edit-image-form button{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: .3s;
+}
+
+#update-btn{
+    background: #0d6efd;
+    color: white;
+}
+
+#update-image-btn:hover{
+    background: #0b5ed7;
+}
+
+.remove-btn{
+    background: #dc3545;
+    color: white;
+}
+
+.remove-btn:hover{
+    background: #bb2d3b;
+}
+
+.divider{
+    display: block;
+    text-align: center;
+    margin: 15px 0;
+    font-weight: bold;
+    color: gray;
+}
+
+#update-error{
+    color: red;
+    text-align: center;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.close-btn{
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    transition: .2s;
+}
+
+.close-btn:hover{
+    color: black;
+    transform: scale(1.2);
+}
+
+#edit-image-form{
+    display: none;
+}
 
 #user-profile {
     width: 150px;
@@ -453,6 +550,7 @@ button {
 }
 
 #edit-image-btn{
+    cursor: pointer;
     position:relative;
     font-size: 20px;
     background: #a50b0b;
@@ -490,15 +588,7 @@ button {
     text-align: center;
 }
 
-#commented{
-    font-size: 18px;
-    color: #111;
-}
 
-#commentor {
-    font-size: 15px;
-    color: #545252;
-}
 
 /* ===== POSTS SECTION ===== */
 #goto-post{
@@ -718,8 +808,11 @@ img.post-pic {
 
 /* comment section */
 .comment-item{
-    padding: 5px;
-    margin: 5px;
+    background: #f0ebeb;
+    border: 1px rgb(148, 148, 148) solid;
+    height: fit-content;
+    padding: 1px;
+    overflow-wrap:anywhere;
 }
 
 
@@ -729,8 +822,11 @@ img.post-pic {
     border: none;
     color: red;
     cursor: pointer;
-    margin-left: 8px;
+    margin-left: 1px;
+    margin-right: auto;
 }
+
+
 
 
 .delete-comment-btn:hover {
@@ -743,8 +839,17 @@ img.post-pic {
     width: 100%;
 }
 
+.com-details{
+    display: flex;
+    width: 100%;
+    background: #f7f4f4;
+}
+
+
 .com-date{
     color: #444;
+    margin-bottom: 0;
+    margin-left: auto;
     font-size: small;
     font-style: italic;
     text-align: right;
@@ -782,19 +887,25 @@ img.post-pic {
     left:0;
     width:100%;
     height:100%;
-    background:rgba(0,0,0,0.9);
+    background:rgba(0,0,0,0.8);
     justify-content:center;
     align-items:center;
     z-index:9999;
 }
 
-.modal-box{
-    background:white;
-    width:400px;
-    max-height:70vh;
-    overflow-y:auto;
-    padding:20px;
-    border-radius:10px;
+#commented{
+    font-size: 16px;
+    margin: 0;
+    color: #111;
+}
+
+#commentor {
+    width: fit-content;
+    /* background: #000; */
+    text-decoration: solid;
+    font-size: 15px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: #545252;
 }
 
 .close-btn{
@@ -813,12 +924,12 @@ img.post-pic {
     height: fit-content;
     width: fit-content;
     background: #fffefe;
-    padding:0px 30px 0px 30px;
+    padding:0px 10px 0px 10px;
     border-radius: 12px;
 }
 
 /* finish */
-  .comment-send-btn{
+  .send-comment-btn{
     background: #008cff;
     border-radius: 7px;
     color: #311212;
@@ -826,18 +937,20 @@ img.post-pic {
     border:none;
   }
 
-  #modal-comment-input{
-    margin:10px;
+  #modal-comment-input {
     border-radius: 8px;
-    font-size: larger;
-    border-color: #ff0000;
-    width: 300px;
+    font-size: small;
+    margin:0 auto;
+    border-color: #080808;
+    width: 280px;
     height: 35px;
+    padding-left: 20px;
+    
   }
 
 
   .modal-content {
-    background: rgb(247, 237, 237);
+    background: rgb(255, 254, 254);
     width: 400px;
     max-height: 70vh;
     overflow: scroll;
@@ -1004,7 +1117,9 @@ img.post-pic {
 }
 
 #feeds{
+    margin:0 auto;
     width: 100%;
+    
 }
 
 
@@ -1019,6 +1134,7 @@ img.post-pic {
     margin: 5px;
     border-radius: 10px;
     max-width: 60%;
+    background: #b2f78b;
 }
 
 .sent {
@@ -1032,16 +1148,14 @@ img.post-pic {
 }
 
 .message-container {
-    border-color: #01ff9e;
-    border-radius: 8px;
-    border: 4px solid rgb(90, 83, 83);
+    border: 1px solid rgb(243, 181, 181);
     display: flex;
     height: 100%;
 }
 
 .sidechatbar {
     width: 30%;
-    background: #858383;
+    background: #f7f4f4;
     padding: 10px;
 }
 
@@ -1051,15 +1165,18 @@ img.post-pic {
     margin-bottom: 5px;
     cursor: pointer;
     border-radius: 9px;
+    overflow-wrap: anywhere;
 }
 
 .chat {
+    /* margin-top: 20px; */
     width: 70%;
     display: flex;
     flex-direction: column;
 }
 
 .messages {
+    background: #531f1feb;
     flex: 1;
     padding: 10px;
     overflow-y: auto;
@@ -1091,7 +1208,7 @@ img.post-pic {
 #messageInput {
     border-radius: 9px;
     flex: 1;
-    padding: 8px;
+    padding-left: 18px;
 }
 
 #msg-btn {
@@ -1103,7 +1220,7 @@ img.post-pic {
 }
 
 #chat-person{
-    height: 50%;
+    height: 100%;
     display: flex;
     align-items: center;
     text-align: center;
@@ -1119,7 +1236,7 @@ img.post-pic {
     justify-content: center;
     align-items: center;
     border-radius: 9px;
-    height: 50px;
+    height: 70px;
     padding: 8px;
 }
 
@@ -1143,7 +1260,7 @@ img.post-pic {
 
 /* Each user block */
 .user {
-    background: floralwhite;
+    background: rgb(231, 207, 159);
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;

@@ -1,10 +1,12 @@
 
+
+
 function login() {
     fetch(`${API}/token/`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            username: `@${document.getElementById("username").value}`,
+            username: `${document.getElementById("username").value}`,
             password: document.getElementById("password").value
         })
     })
@@ -21,10 +23,10 @@ function login() {
         localStorage.setItem("access", data.access)
         localStorage.setItem("refresh", data.refresh)
         localStorage.setItem("token", data.access);
+        document.getElementById("login-error").textContent = "";
         logged();
-        // window.location.href = "/";
+        window.location.href = "/";
     })
-
     .catch(err => {
         document.getElementById("login-error").innerText = "Invalid username or password";
     });

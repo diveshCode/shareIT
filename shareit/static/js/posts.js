@@ -35,15 +35,16 @@ function renderComments(comments) {
 
     const modalComments = document.getElementById("modal-comments");
 
-    if (!comments || comments.length === 0) {
+    if (comments.length === 0) {
         modalComments.innerHTML = `<div class="no-comments">No comments yet</div>`;
         return;
     }
-
+    console.log(comments)
     modalComments.innerHTML = comments.map(comment => `
         <div class="comment-item" id="comment-${comment.id}">
-            <strong id="commentor"> ${comment.user}</strong>
-
+            <span id="commentor"> @${comment.user}</span>
+            <span id="commented">${comment.text}</span>
+            <div class="com-details">
             ${
                 comment.is_owner
                 ? `<button class="delete-comment-btn"
@@ -52,11 +53,8 @@ function renderComments(comments) {
                    </button>`
                 : ""
             }
+            <span class="com-date">${comment.created_at.slice(0,10)}</span></div>
 
-            <br><span id="commented">${comment.text}</span>
-
-            <div class="com-date">${comment.created_at.slice(0,10)}</div>
-            <hr>
         </div>
     `).join("");
 }

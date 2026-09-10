@@ -1,10 +1,16 @@
 from rest_framework import serializers
 from .models import *
+from rest_framework import serializers
+from django.contrib.auth import get_user_model
+from .models import Message
 
-class MessageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Messages
-        fields = "__all__"
+
+
+# class MessageSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Messages
+#         fields = "__all__"
+
 
 class UsersSerializer(serializers.ModelSerializer):
     profile_image = serializers.SerializerMethodField()
@@ -17,6 +23,18 @@ class UsersSerializer(serializers.ModelSerializer):
         if hasattr(obj, "profile") and obj.profile.profile_image:
             return obj.profile.profile_image.url
         return None
+    
+
+
+class FollowersSerializer(serializers.ModelSerializer):
+    followers = UsersSerializer(read_only=True)
+    following = UsersSerializer(read_only=True)
+    class Meta:
+        model = Follow
+        fields = "__all__"
+
+
+
 
 class LoggedPerson(serializers.ModelSerializer):
      class Meta:
@@ -36,6 +54,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['id', 'user', 'text', 'created_at','is_owner']
+        
         
     def get_is_owner(self, obj):
         request = self.context.get("request")
@@ -214,3 +233,32 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
                 user.save()
 
         return instance
+
+
+
+
+# chat/serializers.py
+
+# chat/serializers.py
+
+
+User = get_user_model()
+
+class UserSerializer(serializers.ModelSerializer):
+    profile_image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'username', 'profile_image']
+
+    def get_profile_image(self, obj):
+        # agar tumhare User model me profile_image field hai to use karo
+        if hasattr(obj, 'profile_image') and obj.profile_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.profile_image.url) if request else obj.profile_image.url
+        return None
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ['id', 'sender', 'receiver', 'content', 'is_read', 'created_at']

@@ -26,12 +26,18 @@ document.getElementById("changePasswordForm").addEventListener("submit", functio
     })
     .then(res => res.json())
     .then(data => {
-        message.style.color = "lightgreen";
-        message.innerText = "Password updated successfully";
+        if(data.error){
+            message.style.color = "red";
+            message.innerText = data.error;}
+        else if(data.message){
+            message.style.color = "green";
+            message.innerText = data.message;
 
+        }
         document.getElementById("changePasswordForm").reset();
     })
     .catch(err => {
+        console.log(err)
         message.style.color = "red";
         message.innerText = "Error updating password";
     });

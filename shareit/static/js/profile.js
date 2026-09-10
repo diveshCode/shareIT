@@ -14,9 +14,26 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// profile image 
+const popup = document.getElementById("edit-image-form");
+const openBtn = document.getElementById("openEditImage"); // Your existing button
+const closeBtn = document.getElementById("closeEditImage");
+const image_form = document.getElementById('edit-image-form')
+
+const image_btn = document.getElementById('edit-image-btn')
+image_btn.addEventListener('click',function show_image_form(){
+    image_form.style.display = 'block';
+})
+
+closeBtn.addEventListener('click',function show_image_form(){
+    image_form.style.display = 'none';
+})
+
+
+
 /* ================= PROFILE ================= */
 function profile() {
-    logged()
+    // logged()
     const pathParts = window.location.pathname.split("/");
     const usernameFromUrl = pathParts[2];   // /profile/shruti/
     
@@ -98,12 +115,65 @@ function setupEditToggle() {
     
 } 
 
+
+async function change_profile_image(){
+    console.log('file updatinge')
+    const fileImage = document.getElementById('profile-image').files[0]
+    const token = localStorage.getItem("access");
+    const formData = new FormData()
+    if (fileImage) {
+        formData.append("profile_image", fileImage)
+    }
+
+    const response = await fetch(`${API}/update-profile/`, {
+        method: "PATCH",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        body: formData
+    })
+
+
+    const data = await response.json()
+    
+    if (response.ok) {
+        // update localStorage only if username entered
+        window.location.reload();
+    } else {
+        alert("Update failed")
+        console.log(data)
+    }
+}
+
+
+async function deleteProfileImage() {
+    const token = localStorage.getItem("access");
+
+    try {
+        const response = await fetch(`${API}/delete-profile-image/`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log(data.message);
+            window.location.reload()
+        } else {
+            console.log(data);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function update_user() {
     console.log("Update is running")
     const username = document.getElementById("username-input").value.trim()
     const bio = document.getElementById("bio-input").value.trim()
-    const imageFile = document.getElementById("profile-image").files[0]
-    const removeProfileImage = document.getElementById("removeProfileImage")
     const updateError = document.getElementById("update-error")
     const formData = new FormData()
     
@@ -124,10 +194,7 @@ async function update_user() {
     if (bio != "") {
         formData.append("bio", bio)
     }
-    
-    if (imageFile) {
-        formData.append("profile_image", imageFile)
-    }
+
 
     for (const [key, value] of formData.entries()) {
         console.log(key, value);
@@ -159,4 +226,8 @@ async function update_user() {
     }
 }
 
+
+
 document.getElementById("update-btn").addEventListener("click", update_user)
+document.getElementById("removeProfileImage").addEventListener("click", deleteProfileImage)
+document.getElementById("update-image-btn").addEventListener("click", change_profile_image)
