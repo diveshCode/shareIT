@@ -31,9 +31,8 @@ from .models import AIChatMessage
 
 # client = OpenAI(api_key=settings.OPENAI_API_KEY)
 from rest_framework.views import exception_handler
-
-def ratelimited_error(request, exception):
-    from django.http import JsonResponse
+from django.http import JsonResponse
+def ratelimited_error(request, exception):  
     return JsonResponse({'error': 'Too many requests. Please wait a moment.'}, status=429)
 
 # class AIChatView(APIView):
@@ -167,6 +166,48 @@ class FollowersDetails(APIView):
         )
 
         return Response({"message": "Followed successfully"})
+
+    def delete(self, request):
+        user_id = request.data.get("user_id")
+        if not user_id:
+            return Response({"error":"User_id is require"})
+        try:
+            user_to_unfollow =User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return Response(
+                {
+                'error':'User not found'},
+                status=400)
+
+        follow = Follow.objects.filter(follower=request.user,
+            following=user_to_unfollow)
+
+        if not follow.exists():
+             return Response(
+                {"message": "You are not following this user"},
+                status=400
+            )
+        follow.delete()
+        return Response({
+            'message':'Unfollowed successfully'
+        })
+        
+
+class FollowersRetrieve(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request , id):
+        user = User.objects.get(id=id)
+        print(user)
+        followers = user.followers.all()
+        print(followers)
+        serializer = FollowersSerializer(followers,many=True)
+        return Response({
+            "data":serializer.data
+        })
+
+
+
 
 
 

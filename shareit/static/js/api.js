@@ -21,7 +21,7 @@ function logged(){
         return res.json();
     })
     .then(data => {
-        console.log("person:", data);
+        // console.log("person:", data);
         localStorage.setItem("user_id", data.id)
         localStorage.setItem("username", data.username)
     })

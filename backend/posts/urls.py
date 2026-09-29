@@ -24,6 +24,7 @@ urlpatterns = [
 
     path('posts/', get_posts),
     path('followers/', FollowersDetails.as_view()),
+    path('followers/<int:id>', FollowersRetrieve.as_view()),
     # path('posts/search/', search_posts),
     path('create-post/', create_post),
     path('change-password/', change_password),

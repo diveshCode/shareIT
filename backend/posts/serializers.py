@@ -29,9 +29,23 @@ class UsersSerializer(serializers.ModelSerializer):
 class FollowersSerializer(serializers.ModelSerializer):
     followers = UsersSerializer(read_only=True)
     following = UsersSerializer(read_only=True)
+   
+
+
     class Meta:
         model = Follow
         fields = "__all__"
+
+# class FollowersUpdateSerializer(serializers.ModelSerializer):
+#     # followers = UsersSerializer(write_only=True)
+#     following = UsersSerializer(write_only=True)
+   
+
+
+#     class Meta:
+#         model = Follow
+#         fields = ['following']
+
 
 
 
@@ -46,14 +60,29 @@ class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField()
     new_password = serializers.CharField()
 
+class CommentUserSerializer(serializers.ModelSerializer):
+    profile_image = serializers.ImageField(
+        source='profile.profile_image',
+        read_only=True
+    )
+
+
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'profile_image',
+        ]
+
+
 
 class CommentSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField(read_only=True)
+    user = CommentUserSerializer(read_only=True)
     is_owner = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'text', 'created_at','is_owner']
+        fields = ['id', 'user', 'text','created_at','is_owner']
         
         
     def get_is_owner(self, obj):
@@ -158,10 +187,14 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
     email = serializers.CharField(source="user.email", read_only=True)
     total_posts = serializers.SerializerMethodField()
     posts = serializers.SerializerMethodField()
+    followers_count = serializers.SerializerMethodField()
+    following_count = serializers.SerializerMethodField()
+    is_following = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
         fields = [
+            'id',
             'username',
             'first_name',
             'last_name',
@@ -169,8 +202,18 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
             'bio',
             'profile_image',
             'total_posts',
-            'posts'
+            'posts',
+            'followers_count',
+            'following_count',
+            'is_following'
+
         ]
+
+    def get_followers_count(self, obj):
+        return obj.user.followers.count()
+
+    def get_following_count(self, obj):
+        return obj.user.following.count()
 
     def get_total_posts(self, obj):
         return obj.user.posts.count()
@@ -180,9 +223,19 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
         return PostSerializer(
             posts,
             many=True,
-            context=self.context  # 🔥 THIS IS THE FIX
+            context=self.context  
         ).data
-    
+
+    def get_is_following(self, obj):
+        request = self.context.get('request')
+
+        if not request or not request.user.is_authenticated:
+            return False
+
+        return Follow.objects.filter(
+            follower=request.user,
+            following=obj.user
+        ).exists()
 
 
 class ProfileUpdateSerializer(serializers.ModelSerializer):

@@ -14,6 +14,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
+
+
+
+
 // profile image 
 const popup = document.getElementById("edit-image-form");
 const openBtn = document.getElementById("openEditImage"); // Your existing button
@@ -57,7 +62,7 @@ function profile() {
         }
     
         const data = await res.json();
-    
+        
         if (!res.ok) {
             // console.error(data);
             return;
@@ -66,13 +71,30 @@ function profile() {
         return data;
     })
     .then(data => {
-        
+        const loggedUser = localStorage.getItem("username");
+        console.log("profile" + data.is_following)
         document.getElementById("username-profile").innerText = `@${data.username}`;
         document.getElementById("name-profile").innerText =
         `${data.first_name} ${data.last_name}`;
-
+        const followBtn = document.getElementById('follow-btn')
+        
+        // console.log(loggedUser)
+        if (loggedUser === data.username){
+            followBtn.style.display = 'none'
+        }else{
+            followBtn.textContent = data.is_following ? "Following":"Follow";
+            if(data.is_following){
+                followBtn.style.backgroundColor = 'grey'
+            }else{
+                followBtn.style.backgroundColor = 'green'
+            }
+        }
+        followBtn.dataset.id = data.id
+        console.log(followBtn.dataset.id)
         document.getElementById("email").innerText = data.email || "";
         document.getElementById("post-count").innerText = data.total_posts;
+        document.getElementById("follower").innerText = data.followers_count || 0;
+        document.getElementById("following").innerText = data.following_count || 0;
         document.getElementById("bio").innerText = data.bio || "";
 
         const profileImg = document.getElementById("user-profile");
@@ -89,7 +111,6 @@ function profile() {
         renderPosts(allPosts, postSection);
         
         // Show edit only if own profile
-        const loggedUser = localStorage.getItem("username");
         // console.log(loggedUser)
         if (loggedUser === data.username) {
             document.getElementById("edit-btn").style.display = "block";
@@ -98,6 +119,53 @@ function profile() {
         }
     });
 }
+
+
+const followBtn = document.getElementById('follow-btn')
+
+followBtn.addEventListener('click',()=>{
+    if(followBtn.textContent === 'Follow'){
+    (async ()=>{
+    const response = await fetch(`${API}/followers/`,{
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            user_id:followBtn.dataset.id 
+        })
+        
+    })
+    const data = await response.json();
+    if(response.ok){
+        console.log(data)
+        profile()
+    }else{
+        console.log(data)
+    }})();
+    
+} else {
+    (async ()=>{
+        const response = await fetch(`${API}/followers/`,{
+            method:"DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                user_id:followBtn.dataset.id 
+            })
+            
+        })
+        const data = await response.json();
+        if(response.ok){
+            console.log(data)
+            profile()
+        }else{
+            console.log(data)
+        }})();
+}})
 
 
 /* ================= EDIT TOGGLE ================= */

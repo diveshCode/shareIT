@@ -41,21 +41,29 @@ function renderComments(comments) {
     }
     // console.log(comments)
     modalComments.innerHTML = comments.map(comment => `
-        <div class="comment-item" id="comment-${comment.id}">
-            <span id="commentor"> @${comment.user}</span>
-            <span id="commented">${comment.text}</span>
-            <div class="com-details">
-            ${
-                comment.is_owner
-                ? `<button class="delete-comment-btn"
-                        onclick="deleteComment(${comment.id})">
-                        <i class="fa-solid fa-trash"></i>
-                   </button>`
-                : ""
-            }
-            <span class="com-date">${comment.created_at.slice(0,10)}</span></div>
+        <div class="comment-box" id="comment-${comment.id}">
+            <span class="comment-photo">
+                <img src="${comment.user.profile_image}" alt="Profile Image">
+            </span>
 
+            <div class="comment-item" >
+                <span>
+                    <span id="commentor"> @${comment.user.username}</span>
+                    <span id="commented">${comment.text}</span>
+                </span>
+                <div class="com-details">
+                ${
+                    comment.is_owner
+                    ? `<button class="delete-comment-btn"
+                            onclick="deleteComment(${comment.id})">
+                            <i class="fa-solid fa-trash"></i>
+                    </button>`
+                    : ""
+                }
+                <span class="com-date">${comment.created_at.slice(0,10)}</span></div>
+            </div>
         </div>
+        
     `).join("");
 }
 
@@ -81,7 +89,7 @@ function updateCommentCount(postId) {
 
 function renderPosts(posts, postSection) {
     
-    console.log(posts)
+    // console.log(posts)
     if (!postSection) return;
 
     // postSection.innerHTML = "";
@@ -190,7 +198,7 @@ function submitComment(postId, text) {
     })
     .then(res => res.json())
     .then(newComment => {
-
+        
         const post = allPosts.find(p => p.id === postId);
         if (!post) return;
 
